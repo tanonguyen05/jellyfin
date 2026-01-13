@@ -41,6 +41,25 @@ services:
     restart: unless-stopped
 
 ############################
+# PLEX MEDIA SERVER
+############################
+
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - VERSION=docker
+    volumes:
+      - ./plex:/config
+      - /data/music:/music
+      - ./plex/transcode:/transcode
+    network_mode: host
+    restart: unless-stopped
+
+############################
 # CLOUDFLARED
 ############################
 

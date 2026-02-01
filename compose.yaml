@@ -41,22 +41,24 @@ services:
     restart: unless-stopped
 
 ############################
-# PLEX MEDIA SERVER
+# DISPATCHARR	
 ############################
 
-  plex:
-    image: lscr.io/linuxserver/plex:latest
-    container_name: plex
+  dispatcharr:
+    image: ghcr.io/dispatcharr/dispatcharr:latest
+    container_name: dispatcharr
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=America/New_York
-      - VERSION=docker
+      - TZ=America/Los_Angeles
+      - DISPATCHARR_ENV=aio
+      - REDIS_HOST=localhost
+      - CELERY_BROKER_URL=redis://localhost:6379/0
+      - DISPATCHARR_LOG_LEVEL=info
     volumes:
-      - ./plex:/config
-      - /data/music:/music
-      - ./plex/transcode:/transcode
-    network_mode: host
+      - ./dispatcharr:/data
+    ports:
+      - 9191:9191
     restart: unless-stopped
 
 ############################
